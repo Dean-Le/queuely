@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
     }
     
 
-    @IBAction func queueAction(_ sender: Any) {
+    @IBAction func queueAction(_ sender: UIButton) {
         if inQueue {
             queueButton.setTitle("Enter Queue", for: .normal)
             queuePosLabel.textColor = UIColor.darkGray
@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
         inQueue = !inQueue
     }
     
-    @IBAction func urgentAction(_ sender: Any) {
+    @IBAction func urgentAction(_ sender: UIButton) {
         if aheadOfYou > 0 {
         aheadOfYou -= 1
         karmaPoints -= queueSize - aheadOfYou

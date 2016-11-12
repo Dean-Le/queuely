@@ -7,16 +7,10 @@
 //
 
 import Foundation
-import FirebaseAuth
 
 struct User {
     let uid: String
     let point: Int
-    
-    init(authData: FIRUser) {
-        uid = authData.uid
-        point = 2
-    }
     
     init(uid: String, point: Int) {
         self.uid = uid
