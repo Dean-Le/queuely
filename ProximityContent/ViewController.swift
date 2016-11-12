@@ -3,12 +3,16 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ViewController: UIViewController, ESTBeaconManagerDelegate {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    // let ref = FIRDatabase.database().reference(withPath: "User")
+
     
     let beaconManager = ESTBeaconManager()
     let beaconRegion = CLBeaconRegion(

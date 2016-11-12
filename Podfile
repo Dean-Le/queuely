@@ -7,5 +7,8 @@ target 'ProximityContent' do
 
   pod 'EstimoteSDK'
   # Pods for ProximityContent
-
+  
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 end

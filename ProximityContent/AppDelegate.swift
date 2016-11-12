@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,6 +12,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         ESTConfig.setupAppID("queuely-6lo", andAppToken: "7844b182a9d7ccb4423c1d7ffd356a58")
+        FIRApp.configure()
+        let ref = FIRDatabase.database().reference(withPath: "User")
+        ref.observe(.value, with: { snapshot in
+            print("Dis con me", snapshot.value)
+        })
         return true
     }
 
