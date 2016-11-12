@@ -5,13 +5,12 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         ESTConfig.setupAppID("queuely-6lo", andAppToken: "7844b182a9d7ccb4423c1d7ffd356a58")
-
         return true
     }
 
