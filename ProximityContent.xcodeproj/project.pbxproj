@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FF686A01DD757DB00AF73FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6869F1DD757DB00AF73FA /* MainViewController.swift */; };
 		AE9764471C2037730058A4DC /* BeaconDetailsStaticFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9764461C2037730058A4DC /* BeaconDetailsStaticFactory.swift */; };
 		AE9764491C2037AA0058A4DC /* BeaconDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9764481C2037AA0058A4DC /* BeaconDetails.swift */; };
 		AECA380F1B8F2758009A9324 /* BeaconDetailsCloudFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA380E1B8F2757009A9324 /* BeaconDetailsCloudFactory.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FF6869F1DD757DB00AF73FA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		676D46EDE36FD438F78EF62D /* Pods_ProximityContent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProximityContent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EABDA2E8CBD0BDCEA22ABB4 /* Pods-ProximityContent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProximityContent.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProximityContent/Pods-ProximityContent.release.xcconfig"; sourceTree = "<group>"; };
 		A5749AE4B49C6290C27B99B5 /* Pods-ProximityContent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProximityContent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProximityContent/Pods-ProximityContent.debug.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				AECF165F1B0E0B1000CC83B2 /* Info.plist */,
 				AECF16801B0E0B2F00CC83B2 /* ObjCBridge.h */,
 				AECA38101B904D2A009A9324 /* Estimote */,
+				1FF6869F1DD757DB00AF73FA /* MainViewController.swift */,
 			);
 			path = ProximityContent;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AECA38361B948BCE009A9324 /* BeaconContentFactory.swift in Sources */,
+				1FF686A01DD757DB00AF73FA /* MainViewController.swift in Sources */,
 				AECA38201B908E60009A9324 /* ProximityContentManager.swift in Sources */,
 				AECF16631B0E0B1000CC83B2 /* ViewController.swift in Sources */,
 				AECA381C1B907836009A9324 /* CachingContentFactory.swift in Sources */,
