@@ -76,18 +76,27 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         queueEstimateLabel.text = "\(countdownTime / 60):\(timePad)\(countdownTime % 60)"
         
         // Update Queue Pos
-        if ((aheadOfYou - 1) * 3 * 60) > countdownTime {
+        if ((aheadOfYou - 1) * 3 * 60) >= countdownTime {
             aheadOfYou -= 1
             queuePosLabel.text = "\(aheadOfYou)"
         }
         
-        if aheadOfYou == 0 && !pending {
+        if aheadOfYou == 0 && !pending && !active {
             setPending()
         }
         
         if pending && countdownTime == 0 {
             setInActive()
         }
+        
+        // mock data
+//        if countdownTime == 118 {
+//            getIn()
+//        }
+//        
+//        if countdownTime == 115 {
+//            getOut()
+//        }
     }
 
     
@@ -167,6 +176,9 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
             
             karmaLabel.text = "\(karmaPoints)"
         }
+        if aheadOfYou == 1 {
+            countdownTime = aheadOfYou * 5
+        }
         
         if aheadOfYou == 0 || karmaPoints < (queueSize - aheadOfYou) {
             urgentButton.isHidden = true
@@ -210,11 +222,11 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     
     let beaconManager = ESTBeaconManager()
     let beaconRegion = CLBeaconRegion(
-        proximityUUID: NSUUID(uuidString: "8492E75F-4FD6-469D-B132-043FE94921D8")! as UUID,
+        proximityUUID: NSUUID(uuidString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")! as UUID,
         // major: 59823, minor: 46734,
         identifier: "ranged region")
     
-    //B9407F30-F5F8-466E-AFF9-25556B57FE6D
+    //8492E75F-4FD6-469D-B132-043FE94921D8
     
     /*let arianRegion = CLBeaconRegion(
      proximityUUID: NSUUID(uuidString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")! as UUID,
@@ -268,6 +280,7 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         current = "out"
         if (prev2 == "out" && prev1 == "out" && current == "out" ) {
             getOut()
+        
         }
     }
     
@@ -275,11 +288,15 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     
 
     func getIn() {
-        print("Đang ỉa")
+                if pending {
+            setActive()
+        }
     }
     
     func getOut() {
-        print("Ỉa xong rồi")
+        if active {
+            setInActive()
+        }
     }
 
 }
