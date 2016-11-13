@@ -84,6 +84,10 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         if aheadOfYou == 0 && !pending {
             setPending()
         }
+        
+        if pending && countdownTime == 0 {
+            setInActive()
+        }
     }
 
     
