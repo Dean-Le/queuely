@@ -72,12 +72,24 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
             timePad = ""
         }
         queueEstimateLabel.text = "\(countdownTime / 60):\(timePad)\(countdownTime % 60)"
+        
+        // Update Queue Pos
+        if ((aheadOfYou - 1) * 3 * 60) > countdownTime {
+            aheadOfYou -= 1
+            queuePosLabel.text = "\(aheadOfYou)"
+        }
+        
+        if aheadOfYou == 0 {
+            setPending()
+        }
     }
 
     
     func setPending() {
         queueEstimateLabel.isHidden = false
         queuePosLabel.isHidden = true
+        urgentButton.isHidden = true
+        
         centerImage.image = UIImage(named: "center_pending")
         
         countdownTime = 2 * 60
