@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,6 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VACANT" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kG9-FE-qhl">
+                                <rect key="frame" x="16" y="451.5" width="343" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="NCc-Uk-RBT"/>
                                 </constraints>
@@ -30,12 +31,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Beacon" translatesAutoresizingMaskIntoConstraints="NO" id="c4s-G1-mae">
+                                <rect key="frame" x="107.5" y="191.5" width="160" height="210"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="210" id="Ay1-2b-iZa"/>
                                     <constraint firstAttribute="width" constant="160" id="vKe-P1-u1R"/>
                                 </constraints>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YOa-x4-yvX"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YOa-x4-yvX">
+                                <rect key="frame" x="169" y="523.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.62745098039215685" green="0.66274509803921566" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -250,6 +254,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="centerImage" destination="2XE-9U-LR0" id="VHF-qN-fMr"/>
                         <outlet property="karmaLabel" destination="fcE-9s-xGn" id="KD2-6X-1Bt"/>
                         <outlet property="queueButton" destination="0Be-7Y-IuL" id="D2M-oP-cge"/>
                         <outlet property="queueEstimateLabel" destination="V1C-5S-2p7" id="Jbg-4N-RrF"/>

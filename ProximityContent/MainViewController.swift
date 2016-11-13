@@ -16,10 +16,17 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     @IBOutlet weak var queueButton: UIButton!
     @IBOutlet weak var urgentButton: UIButton!
     
+    @IBOutlet weak var centerImage: UIImageView!
+    
     var inQueue = false
-    var aheadOfYou = 8
-    var queueSize = 8
+    var aheadOfYou = 3
+    var queueSize = 3
     var karmaPoints = 85
+    
+    var countdownTimer: Timer!
+    var countdownTime = 0
+    var timePad = ""
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +37,94 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         self.beaconManager.requestWhenInUseAuthorization()
         renderUI()
         // Do any additional setup after loading the view.
+        countdownTime = aheadOfYou * 3 * 60
+
+        
+        urgentButton.isHidden = true
+        queuePosLabel.text = "\(aheadOfYou)"
+        if countdownTime % 60 < 10 {
+            timePad = "0"
+        } else {
+            timePad = ""
+        }
+        queueEstimateLabel.text = "\(countdownTime / 60):\(timePad)\(countdownTime % 60)"
+        karmaLabel.text = "\(karmaPoints)"
+        
+        
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runTimedCode), userInfo: nil, repeats: true)
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    func runTimedCode() {
+        countdownTime -= 1
+        
+        if countdownTime < 0 {
+            countdownTime = 0
+        }
+        
+        if countdownTime % 60 < 10 {
+            timePad = "0"
+        } else {
+            timePad = ""
+        }
+        queueEstimateLabel.text = "\(countdownTime / 60):\(timePad)\(countdownTime % 60)"
+    }
+
+    
+    func setPending() {
+        queueEstimateLabel.isHidden = false
+        queuePosLabel.isHidden = true
+        centerImage.image = UIImage(named: "center_pending")
+        
+        countdownTime = 2 * 60
+        queueEstimateLabel.textColor = UIColor(red: 98.0/255.0, green: 98.0/255.0, blue: 98.0/255.0, alpha: 1.0)
+    }
+    
+    func setActive() {
+        queueEstimateLabel.isHidden = true
+        queuePosLabel.isHidden = true
+        centerImage.image = UIImage(named: "center_in")
+    }
+    
+    func setInActive() {
+        centerImage.image = UIImage(named: "center")
+        queueEstimateLabel.isHidden = false
+        queuePosLabel.isHidden = false
+        
+        queueButton.setTitle("Enter Queue", for: .normal)
+        queuePosLabel.textColor = UIColor.darkGray
+        urgentButton.isHidden = true
+        
+        queueEstimateLabel.textColor = UIColor.white
+        
+        // Reset Queue
+        aheadOfYou = 8
+        queuePosLabel.text = "\(aheadOfYou)"
+        countdownTime = aheadOfYou * 3 * 60
+
+    }
+    
+    func setQueued() {
+        centerImage.image = UIImage(named: "center")
+        queueEstimateLabel.isHidden = false
+        queuePosLabel.isHidden = false
+        
+        queueButton.setTitle("Leave Queue", for: .normal)
+        queuePosLabel.textColor = UIColor(red: 131.0/255.0, green: 207.0/255.0, blue: 242.0/255.0, alpha: 1.0)
+        urgentButton.isHidden = false
+        
+        queueEstimateLabel.textColor = UIColor.white
+        
+        
+        
+        if karmaPoints <= (queueSize - aheadOfYou) {
+            urgentButton.isHidden = true
+        }
+    }
 
     @IBAction func queueAction(_ sender: UIButton) {
         inQueue = !inQueue
@@ -47,6 +135,19 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         if aheadOfYou > 0 {
             aheadOfYou -= 1
             karmaPoints -= queueSize - aheadOfYou
+            queuePosLabel.text = "\(aheadOfYou)"
+            
+            countdownTime = aheadOfYou * 3 * 60
+            
+            karmaLabel.text = "\(karmaPoints)"
+        }
+        
+        if aheadOfYou == 0 || karmaPoints < (queueSize - aheadOfYou) {
+            urgentButton.isHidden = true
+        }
+        
+        if aheadOfYou == 0 {
+            setPending()
         }
         
         renderUI()
@@ -66,25 +167,16 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         
         
         if inQueue {
-            queueButton.setTitle("Enter Queue", for: .normal)
-            queuePosLabel.textColor = UIColor.darkGray
-            urgentButton.isHidden = true
-            
-            
-            // Reset Queue
-            queuePosLabel.text = "\(aheadOfYou)"
-            queueEstimateLabel.text = "\(aheadOfYou * 3):00"
-            
+            setInActive()
         } else {
-            queueButton.setTitle("Leave Queue", for: .normal)
-            queuePosLabel.textColor = UIColor(red: 131.0/255.0, green: 207.0/255.0, blue: 242.0/255.0, alpha: 1.0)
-            urgentButton.isHidden = false
+            setQueued()
         }
         
         
         if aheadOfYou == 0 {
-            queuePosLabel.text = "It's your turn"
-            urgentButton.isHidden = true
+            setPending()
+//            queuePosLabel.text = "It's your turn"
+//            urgentButton.isHidden = true
         }
     
     }
@@ -148,11 +240,14 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         prev2 = prev1
         prev1 = current
         current = "out"
-        if (prev2 == "out" && prev1 == "out" && current == "out" ){
+        if (prev2 == "out" && prev1 == "out" && current == "out" ) {
             getOut()
         }
     }
     
+            
+    
+
     func getIn() {
         print("Đang ỉa")
     }
