@@ -79,11 +79,14 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
             queueButton.setTitle("Leave Queue", for: .normal)
             queuePosLabel.textColor = UIColor(red: 131.0/255.0, green: 207.0/255.0, blue: 242.0/255.0, alpha: 1.0)
             urgentButton.isHidden = false
+            queuePosLabel.text = "\(aheadOfYou)"
+            queueEstimateLabel.text = "\(aheadOfYou * 3):00"
         }
         
         
         if aheadOfYou == 0 {
             queuePosLabel.text = "It's your turn"
+            queuePosLabel.adjustsFontSizeToFitWidth = true
             urgentButton.isHidden = true
         }
     
