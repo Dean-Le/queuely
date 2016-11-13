@@ -28,11 +28,7 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         self.beaconManager.delegate = self
         // 4. We need to request this authorization for every beacon manager
         self.beaconManager.requestWhenInUseAuthorization()
-        
-        urgentButton.isHidden = true
-        queuePosLabel.text = "\(aheadOfYou)"
-        queueEstimateLabel.text = "\(aheadOfYou * 3):00"
-        karmaLabel.text = "\(karmaPoints)"
+        renderUI()
         // Do any additional setup after loading the view.
     }
 
@@ -43,38 +39,17 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     
 
     @IBAction func queueAction(_ sender: UIButton) {
-        if inQueue {
-            queueButton.setTitle("Enter Queue", for: .normal)
-            queuePosLabel.textColor = UIColor.darkGray
-            urgentButton.isHidden = true
-            
-            
-            // Reset Queue
-            aheadOfYou = 8
-            queuePosLabel.text = "\(aheadOfYou)"
-            queueEstimateLabel.text = "\(aheadOfYou * 3):00"
-            
-        } else {
-            queueButton.setTitle("Leave Queue", for: .normal)
-            queuePosLabel.textColor = UIColor(red: 131.0/255.0, green: 207.0/255.0, blue: 242.0/255.0, alpha: 1.0)
-            urgentButton.isHidden = false
-        }
-        
         inQueue = !inQueue
+        renderUI()
     }
     
     @IBAction func urgentAction(_ sender: UIButton) {
         if aheadOfYou > 0 {
-        aheadOfYou -= 1
-        karmaPoints -= queueSize - aheadOfYou
-        queuePosLabel.text = "\(aheadOfYou)"
-        queueEstimateLabel.text = "\(aheadOfYou * 3):00"
-        karmaLabel.text = "\(karmaPoints)"
+            aheadOfYou -= 1
+            karmaPoints -= queueSize - aheadOfYou
         }
         
-        if aheadOfYou == 0 {
-            urgentButton.isHidden = true
-        }
+        renderUI()
     }
     /*
     // MARK: - Navigation
@@ -85,6 +60,34 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    private func renderUI(){
+        
+        
+        if inQueue {
+            queueButton.setTitle("Enter Queue", for: .normal)
+            queuePosLabel.textColor = UIColor.darkGray
+            urgentButton.isHidden = true
+            
+            
+            // Reset Queue
+            queuePosLabel.text = "\(aheadOfYou)"
+            queueEstimateLabel.text = "\(aheadOfYou * 3):00"
+            
+        } else {
+            queueButton.setTitle("Leave Queue", for: .normal)
+            queuePosLabel.textColor = UIColor(red: 131.0/255.0, green: 207.0/255.0, blue: 242.0/255.0, alpha: 1.0)
+            urgentButton.isHidden = false
+        }
+        
+        
+        if aheadOfYou == 0 {
+            queuePosLabel.text = "It's your turn"
+            urgentButton.isHidden = true
+        }
+    
+    }
     
     
     let beaconManager = ESTBeaconManager()
