@@ -102,7 +102,7 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
         queueEstimateLabel.textColor = UIColor.white
         
         // Reset Queue
-        aheadOfYou = 8
+        aheadOfYou = 3
         queuePosLabel.text = "\(aheadOfYou)"
         countdownTime = aheadOfYou * 3 * 60
 
@@ -166,7 +166,7 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     private func renderUI(){
         
         
-        if inQueue {
+        if !inQueue {
             setInActive()
         } else {
             setQueued()
