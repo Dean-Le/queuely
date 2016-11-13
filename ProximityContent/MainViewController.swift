@@ -19,6 +19,8 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     @IBOutlet weak var centerImage: UIImageView!
     
     var inQueue = false
+    var pending = false
+    var active = false
     var aheadOfYou = 3
     var queueSize = 3
     var karmaPoints = 85
@@ -79,13 +81,15 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
             queuePosLabel.text = "\(aheadOfYou)"
         }
         
-        if aheadOfYou == 0 {
+        if aheadOfYou == 0 && !pending {
             setPending()
         }
     }
 
     
     func setPending() {
+        pending = true
+        active = false
         queueEstimateLabel.isHidden = false
         queuePosLabel.isHidden = true
         urgentButton.isHidden = true
@@ -97,12 +101,16 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     }
     
     func setActive() {
+        active = true
+        pending = false
         queueEstimateLabel.isHidden = true
         queuePosLabel.isHidden = true
         centerImage.image = UIImage(named: "center_in")
     }
     
     func setInActive() {
+        pending = false
+        active = false
         centerImage.image = UIImage(named: "center")
         queueEstimateLabel.isHidden = false
         queuePosLabel.isHidden = false
@@ -121,6 +129,8 @@ class MainViewController: UIViewController, ESTBeaconManagerDelegate {
     }
     
     func setQueued() {
+        pending = false
+        active = false
         centerImage.image = UIImage(named: "center")
         queueEstimateLabel.isHidden = false
         queuePosLabel.isHidden = false
