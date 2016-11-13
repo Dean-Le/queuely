@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, ESTBeaconManagerDelegate {
 
     @IBOutlet weak var karmaLabel: UILabel!
     @IBOutlet weak var queuePosLabel: UILabel!
@@ -23,6 +23,12 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 3. Set the beacon manager's delegate
+        self.beaconManager.delegate = self
+        // 4. We need to request this authorization for every beacon manager
+        self.beaconManager.requestWhenInUseAuthorization()
+        
         urgentButton.isHidden = true
         queuePosLabel.text = "\(aheadOfYou)"
         queueEstimateLabel.text = "\(aheadOfYou * 3):00"
@@ -79,5 +85,77 @@ class MainViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    let beaconManager = ESTBeaconManager()
+    let beaconRegion = CLBeaconRegion(
+        proximityUUID: NSUUID(uuidString: "8492E75F-4FD6-469D-B132-043FE94921D8")! as UUID,
+        // major: 59823, minor: 46734,
+        identifier: "ranged region")
+    
+    //B9407F30-F5F8-466E-AFF9-25556B57FE6D
+    
+    /*let arianRegion = CLBeaconRegion(
+     proximityUUID: NSUUID(uuidString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")! as UUID,
+     major: 10773, minor: 19987,
+     identifier: "ranged region")
+     
+     let sinhRegion = CLBeaconRegion(
+     proximityUUID: NSUUID(uuidString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")! as UUID,
+     major: 8911, minor: 253,
+     identifier: "ranged region")
+     */
+    var proximityContentManager: ProximityContentManager!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.beaconManager.startRangingBeacons(in: self.beaconRegion)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.beaconManager.startRangingBeacons(in: self.beaconRegion)
+    }
+    var current: String = ""
+    var prev1: String = ""
+    var prev2: String = ""
+    func beaconManager(_ manager: Any, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+        for item in beacons {
+            print("dis con meeee", item.major, item.proximity.rawValue, item.accuracy)
+            
+            switch item.proximity {
+            case .immediate, .near:
+                
+                prev2 = prev1
+                prev1 = current
+                current = "in"
+                if (prev2 == "in" && prev1 == "in" && current == "in" ){
+                    getIn()
+                }
+                
+                getIn()
+                return
+            case .unknown:
+                print("unknown")
+            default:
+                print("default")
+            }
+        }
+        
+        prev2 = prev1
+        prev1 = current
+        current = "out"
+        if (prev2 == "out" && prev1 == "out" && current == "out" ){
+            getOut()
+        }
+    }
+    
+    func getIn() {
+        print("Đang ỉa")
+    }
+    
+    func getOut() {
+        print("Ỉa xong rồi")
+    }
 
 }

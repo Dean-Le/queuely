@@ -80,6 +80,13 @@ class ViewController: UIViewController, ESTBeaconManagerDelegate {
             switch item.proximity {
             case .immediate, .near:
                 
+                prev2 = prev1
+                prev1 = current
+                current = "in"
+                if (prev2 == "in" && prev1 == "in" && current == "in" ){
+                    getIn()
+                }
+                
                 getIn()
                 return
             case .unknown:
@@ -88,26 +95,22 @@ class ViewController: UIViewController, ESTBeaconManagerDelegate {
                 print("default")
             }
         }
-        getOut()
-    }
-    
-    func getIn() {
-        prev2 = prev1
-        prev1 = current
-        current = "in"
-        if (prev2 == "in" && prev1 == "in" && current == "in" ){
-            print("Đang ỉa")
-            self.label.text = "OCCUPIED"
-        }
-    }
-    
-    func getOut() {
+        
         prev2 = prev1
         prev1 = current
         current = "out"
         if (prev2 == "out" && prev1 == "out" && current == "out" ){
-            print("Ỉa xong rồi")
-            self.label.text = "VACANT"
+            getOut()
         }
+    }
+    
+    func getIn() {
+        print("Đang ỉa")
+        self.label.text = "OCCUPIED"
+    }
+    
+    func getOut() {
+        print("Ỉa xong rồi")
+        self.label.text = "VACANT"
     }
 }
